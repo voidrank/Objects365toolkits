@@ -9,6 +9,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='objects365 toolkits')
     parser.add_argument('annotation', type=str, help='annotation file',
                         default='/mnt/data/Objects365/zhiyuan_objv2_train.json')
+    parser.add_argument('output-dir', type=str, help='output dir',
+                        default='/mnt/data/Objects365/parts/')
     parser.add_argument('--seed', type=int, help='random seed',
                         default=17)
     parser.add_argument('--num-part', type=int, help='num of parts',
@@ -72,5 +74,5 @@ if __name__ == '__main__':
             else:
                 part_ann[key] = value
 
-        with open("/mnt/data/Objects365/parts/objects365_train_part{}.json".format(idx), "w") as f:
+        with open("{}/objects365_train_part{}.json".format(args.output_dir, idx), "w") as f:
             json.dump(part_ann, f)
