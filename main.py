@@ -9,7 +9,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='objects365 toolkits')
     parser.add_argument('annotation', type=str, help='annotation file',
                         default='/mnt/data/Objects365/zhiyuan_objv2_train.json')
-    parser.add_argument('output-dir', type=str, help='output dir',
+    parser.add_argument('output_dir', type=str, help='output dir',
                         default='/mnt/data/Objects365/parts/')
     parser.add_argument('--seed', type=int, help='random seed',
                         default=17)
