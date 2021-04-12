@@ -41,11 +41,11 @@ if __name__ == '__main__':
 
     final_image_ids = []
     for key, value in img2anns.items():
-        image_id = value[0]['image_id']
-        if id2img[image_id]['file_name'] in IGNORE_IMAGE_NAMES:
-            print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
-            continue
         if args.min_obj_per_img <= len(value) <= args.max_obj_per_img:
+            image_id = value[0]['image_id']
+            if id2img[image_id]['file_name'] in IGNORE_IMAGE_NAMES:
+                print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
+                continue
             final_image_ids.append(value[0]['image_id'])
 
     image_dict = dict([(img['id'], img) for img in image_list])
