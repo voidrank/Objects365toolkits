@@ -3,6 +3,9 @@ import itertools
 import random
 import json
 
+IGNORE_IMAGE_NAMES = [
+    'images/v2/patch16/objects365_v2_00908726.jpg'
+]
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -29,6 +32,7 @@ if __name__ == '__main__':
 
     image_list = anns['images']
 
+    id2img = dict([(img['id'], img) for img in image_list])
     img2anns = dict([(img['id'], []) for img in image_list])
 
     for ann in anns['annotations']:
@@ -37,6 +41,10 @@ if __name__ == '__main__':
 
     final_image_ids = []
     for key, value in img2anns.items():
+        image_id = value[0]['image_id']
+        if id2img[image_id]['file_name'] in IGNORE_IMAGE_NAMES:
+            print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
+            continue
         if args.min_obj_per_img <= len(value) <= args.max_obj_per_img:
             final_image_ids.append(value[0]['image_id'])
 
