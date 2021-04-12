@@ -1,11 +1,9 @@
 import argparse
 import itertools
+from os import path as osp
 import random
 import json
 
-IGNORE_IMAGE_NAMES = [
-    'images/v2/patch16/objects365_v2_00908726.jpg'
-]
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -43,7 +41,8 @@ if __name__ == '__main__':
     for key, value in img2anns.items():
         if args.min_obj_per_img <= len(value) <= args.max_obj_per_img:
             image_id = value[0]['image_id']
-            if id2img[image_id]['file_name'] in IGNORE_IMAGE_NAMES:
+            filename = osp.join(osp.dirname(args.annotation), id2img[image_id]['file_name'])
+            if not osp.exists(filename):
                 print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
                 continue
             final_image_ids.append(value[0]['image_id'])
