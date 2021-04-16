@@ -12,6 +12,8 @@ if __name__ == '__main__':
                         default='/mnt/data/Objects365/zhiyuan_objv2_train.json')
     parser.add_argument('output_dir', type=str, help='output dir',
                         default='/mnt/data/Objects365/parts/')
+    parser.add_argument('--image-base-dir', type=str, help='Path to the image dir root',
+                        default='/mnt/data/Objects365/')
     parser.add_argument('--seed', type=int, help='random seed',
                         default=17)
     parser.add_argument('--num-part', type=int, help='num of parts',
@@ -41,7 +43,7 @@ if __name__ == '__main__':
     for key, value in img2anns.items():
         if args.min_obj_per_img <= len(value) <= args.max_obj_per_img:
             image_id = value[0]['image_id']
-            filename = osp.join(osp.dirname(args.annotation), id2img[image_id]['file_name'])
+            filename = osp.join(args.image_base_dir, id2img[image_id]['file_name'])
             if not osp.exists(filename):
                 print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
                 continue
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     random.shuffle(image_list)
 
     # subsample
-    part_size = (len(final_image_list) + args.num_part - 1) // args.num_part
+    part_size = len(final_image_list) // args.num_part
     image_part_list = [final_image_list[part_size * i: part_size * (i + 1)] for i in range(args.num_part)]
     ann_part_list = [[] for i in range(args.num_part)]
     img2part = dict()
