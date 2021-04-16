@@ -69,8 +69,9 @@ if __name__ == '__main__':
             img2part[final_image_list[j]['id']] = i
 
     for img in final_image_list:
-        image_part_list[img2part[img['id']]].append(img)
-        ann_part_list[img2part[img['id']]].extend(img2anns[img['id']])
+        if len(image_part_list) > img2part[img['id']]:
+            image_part_list[img2part[img['id']]].append(img)
+            ann_part_list[img2part[img['id']]].extend(img2anns[img['id']])
 
     # save the results
     for idx, (image_part, ann_part) in enumerate(zip(image_part_list, ann_part_list)):
