@@ -44,7 +44,7 @@ if __name__ == '__main__':
         if args.min_obj_per_img <= len(value) <= args.max_obj_per_img:
             image_id = value[0]['image_id']
             filename = osp.join(args.image_base_dir, id2img[image_id]['file_name'])
-            if not osp.exists(filename):
+            if (('patch1' in filename) or ('patch16' in filename)) and not osp.exists(filename):
                 print('Lost image ({}) is ignored.'.format(id2img[image_id]['file_name']))
                 continue
             final_image_ids.append(value[0]['image_id'])
